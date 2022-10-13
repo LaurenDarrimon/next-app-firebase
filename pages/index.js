@@ -29,11 +29,13 @@ export default function Home({ allPeople }) {
       <h2>Find Hobbits, Dwarves, Elves, Men, Wizards, and more!</h2>
 
       <div className="list-group">
-        {allPeople.map(({ id, name}) => (
-          <Link  key={id} href={`/${id}`}>
-            <a className="list-group-item list-group-item-action"> {name} </a> 
-          </Link>
-        ))}
+        {allPeople ?
+            allPeople.map(({ id, name}) => (
+              <Link  key={id} href={`/${id}`}>
+                <a className="list-group-item list-group-item-action"> {name} </a> 
+              </Link>
+            ))
+        : null }
       </div>
     </Layout>
   )
