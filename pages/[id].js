@@ -40,34 +40,43 @@ export async function getStaticPaths() {
 export default function Entry (  { personData , friendData } ){
     return (
         <Layout>
-            <article className="card col-6">
-                <div className="card-body">
-                    <h4 className="card-title text-dark">
-                        {personData.name}
-                    </h4>
-                    <h5 className="card-subtitle mb-2 text-muted"> 
-                        {personData.job}
-                    </h5>
-                    <p className="card-text text-dark">{personData.name} was {personData.age} years old at the time of the Fellowship of the Ring.</p>
-                    <a href={"mailto:" + personData.email} className="card-link text-primary"> Email {personData.name}</a>
-                    <br/>
-                    <h5 className="card-text text-dark">
-                        Friends of {personData.name} :
-                    </h5>
-                    {console.log("friend data inside component")}
-                    {console.log(friendData)}
-                        {friendData &&
-                            <div className="list-group">
-                           
+            <article data-testid="not-empty" className="card col-6">
+                { personData ? 
+                    <div className="card-body">
+                    
+                        <h4 className="card-title text-dark">
+                            {personData.name}
+                        </h4>
+                        <h5 className="card-subtitle mb-2 text-muted"> 
+                            {personData.job}
+                        </h5>
+                        <p className="card-text text-dark">{personData.name} was {personData.age} years old at the time of the Fellowship of the Ring.</p>
+                        <a href={"mailto:" + personData.email} className="card-link text-primary"> Email {personData.name}</a>
+                        <br/>
+                        <h5  className="card-text text-dark">
+                            Friends of {personData.name} :
+                        </h5>
+                        {console.log("friend data inside component")}
+                        {console.log(friendData)}
+                            {friendData &&
+                                <div className="list-group">
+                            
 
-                            {friendData.map(({ friendId, friendName }) => (
-                                <Link  key={friendId} href={`/${friendId}`}>
-                                    <a className="list-group-item text-dark list-group-item-action"> {friendName} </a> 
-                                </Link>
-                            ))}
-                            </div>
-                        }        
-                </div>
+                                {friendData.map(({ friendId, friendName }) => (
+                                    <Link  key={friendId} href={`/${friendId}`}>
+                                        <a  data-testid="hyperlink" className="friend-link list-group-item text-dark list-group-item-action"> {friendName} </a> 
+                                    </Link>
+                                ))}
+                                </div>
+                            }     
+                    </div> 
+                :  
+                    <div className="card-body">     
+                    <h4 className="card-title text-dark">
+                        No Friend Here Yet! 
+                    </h4>
+                    </div>
+                }
             </article>
         </Layout>
     )
