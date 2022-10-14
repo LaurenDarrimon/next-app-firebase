@@ -10,8 +10,8 @@ export async function getStaticProps({ params }) {
 
     const friendData = await getFriendData(params.id);
 
-    console.log("friend data on id page")
-    console.log(friendData)
+    // console.log("friend data on id page")
+    // console.log(friendData)
 
     return {
         props: {
@@ -60,7 +60,7 @@ export default function Entry (  { friendData } ){
                             
 
                                 {friendData.data.friends.map(({ friendId, name }) => (
-                                    <Link  key={friendId} href={`/${friendId}`}>
+                                    <Link  key={friendId} href={`/friends/${friendId}`}>
                                         <a  data-testid="hyperlink" className="friend-link list-group-item text-dark list-group-item-action"> {name} </a> 
                                     </Link>
                                 ))}

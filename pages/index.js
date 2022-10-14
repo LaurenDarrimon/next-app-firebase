@@ -3,19 +3,38 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Layout from '../components/layout.js';
 
-import { getOrderedList } from '../lib/data';
 import styles from '../styles/Home.module.css'
 
+import { getFriendList } from '../lib/friends.js';
+
 export async function getStaticProps() {
-  const allPeople = getOrderedList();
-  return{
-    props: {
-      allPeople
-    }
-  }
+
+  const allPeopleArray  = await getFriendList();
+
+      // list.sort(function(a, b){
+    //     return a.name.localeCompare(b.name);
+    // });
+
+
+  const allPeople = JSON.stringify(allPeopleArray)
+
+  // console.log("friend data on home page")
+  // console.log(allPeople)
+
+  return {
+      props: {
+          allPeople
+      }
+  };
 }
 
 export default function Home({ allPeople }) {
+
+  let allPeopleList = JSON.parse(allPeople); 
+
+  console.log("friend data on home page")
+  console.log(allPeopleList)
+
   return (
     <Layout home>
       <h1 className={styles.title}>
@@ -29,10 +48,10 @@ export default function Home({ allPeople }) {
       <h2>Find Hobbits, Dwarves, Elves, Men, Wizards, and more!</h2>
 
       <div className="list-group">
-        {allPeople ?
-            allPeople.map(({ id, name}) => (
-              <Link  key={id} href={`/${id}`}>
-                <a className="list-group-item list-group-item-action"> {name} </a> 
+        {allPeopleList ?
+            allPeopleList.map(({ id, data}) => (
+              <Link  key={id} href={`friends/${id}`}>
+                <a className="list-group-item list-group-item-action"> {data.name} </a> 
               </Link>
             ))
         : null }
